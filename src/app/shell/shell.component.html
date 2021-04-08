@@ -1,0 +1,25 @@
+<header class="top-bar">
+	<h1 class="title">actevents</h1>
+</header>
+
+<main class="outlet">
+	<router-outlet></router-outlet>
+</main>
+
+
+<nav class="navbar">
+	<div class="navbar__items">
+		<div class="navbar__item" routerLinkActive="active" routerLink="" [routerLinkActiveOptions]="{ exact: true }">
+			<i class="fas fa-home"></i>
+            <span>Home</span>
+		</div>
+		<div class="navbar__item" routerLinkActive="active" routerLink="find">
+			<i class="fas fa-search-location"></i>
+            <span>Entdecken</span>
+		</div>
+		<div class="navbar__item disabled" routerLinkActive="active" routerLink="profile">
+			<i class="fas fa-user"></i>
+            <span>Profil</span>
+		</div>
+	</div>
+</nav>

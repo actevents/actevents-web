@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginPageComponent } from './auth/login-page/login-page.component';
+import { RegisterPageComponent } from './auth/register-page/register-page.component';
 
 const routes: Routes = [
 	{
-		path: '',
-		pathMatch: 'full',
-		redirectTo: 'discover',
+		path: 'login',
+		component: LoginPageComponent
 	},
 	{
-		path: 'discover',
-		loadChildren: () => import('./events/events.module').then((m) => m.EventsModule),
+		path: 'register',
+		component: RegisterPageComponent
 	},
-	{ path: 'map', loadChildren: () => import('./map/map.module').then(m => m.MapModule) },
+	{
+		path: '',
+		loadChildren: () => import('./shell/shell.module').then((m) => m.ShellModule)
+	}
 ];
 
 @NgModule({
