@@ -5,12 +5,13 @@ const routes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
-		redirectTo: 'events',
+		redirectTo: 'discover',
 	},
 	{
-		path: 'events',
+		path: 'discover',
 		loadChildren: () => import('./events/events.module').then((m) => m.EventsModule),
 	},
+	{ path: 'map', loadChildren: () => import('./map/map.module').then(m => m.MapModule) },
 ];
 
 @NgModule({

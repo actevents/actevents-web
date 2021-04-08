@@ -1,0 +1,39 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+}
+
+.outlet {
+    flex-grow: 1;
+    overflow-y: auto;
+    max-width: 70rem;
+    width: 100%;
+}
+
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--blue-600);
+    color: #fff;
+    box-shadow: 0rem 0rem 0.2rem 0 rgba(0, 0, 0, 0.5);
+    z-index: 10;
+
+    &__item {
+        flex-grow: 1;
+        cursor: pointer;
+        font-weight: bold;
+        height: 4rem;
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &--active {
+            background: var(--blue-800);
+        }
+    }
+}

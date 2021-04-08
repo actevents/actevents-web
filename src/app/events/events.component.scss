@@ -1,0 +1,12 @@
+:host {
+    display: block;
+    padding: 1rem;
+}
+
+
+.events {
+    .event:not(:last-child) {
+        display: block;
+        margin-bottom: 2rem;
+    }
+}

@@ -1,5 +1,9 @@
-<h1>actevents</h1>
+<main class="outlet">
+	<router-outlet></router-outlet>
+</main>
 
-<div class="outlet">
-    <router-outlet></router-outlet>
-</div>
+<nav class="navbar">
+	<div routerLinkActive="navbar__item--active" routerLink="map" class="navbar__item"><i class="fas fa-globe-europe"></i></div>
+	<div routerLinkActive="navbar__item--active" routerLink="discover" class="navbar__item"><i class="fas fa-map-pin"></i></div>
+	<div routerLinkActive="navbar__item--active" routerLink="settings" class="navbar__item"><i class="fas fa-cog"></i></div>
+</nav>
