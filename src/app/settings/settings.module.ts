@@ -7,7 +7,6 @@ import { SettingsComponent } from './settings.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
-import { ProfileComponent } from './profile/profile.component';
 import { EventsComponent } from './events/events.component';
 
 @NgModule({

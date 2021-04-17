@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RoutesRecognized } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 @Component({
 	templateUrl: './shell.component.html',
@@ -13,7 +14,31 @@ export class ShellComponent implements OnInit {
 	canGoBack = false;
 
 	ngOnInit(): void {
-		this.route.data.subscribe(console.log);
+		// BEGIN WTF?!
+		this.router.events
+			.pipe(
+				filter((e) => e instanceof NavigationEnd),
+				map(() => {
+					let route = this.route.firstChild;
+					let child = route;
+
+					while (child) {
+						if (child.firstChild) {
+							child = child.firstChild;
+							route = child;
+						} else {
+							child = null;
+						}
+					}
+
+					return route;
+				}),
+				mergeMap((route) => route!.data)
+			)
+			.subscribe((data) => {
+				this.canGoBack = !!data.canGoBack;
+			});
+		// END WTF?!
 	}
 
 	onGoBack(): void {

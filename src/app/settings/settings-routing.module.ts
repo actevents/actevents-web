@@ -13,13 +13,15 @@ const routes: Routes = [
 		path: 'profile',
 		component: ProfileComponent,
 		data: {
-			test: 'hello',
 			canGoBack: true
 		}
 	},
 	{
 		path: 'events',
 		component: EventsComponent,
+		data: {
+			canGoBack: true
+		}
 	},
 ];
 
