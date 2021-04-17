@@ -4,20 +4,25 @@ import { Injectable } from '@angular/core';
 	providedIn: 'root',
 })
 export class AuthService {
-    constructor() {}
+	constructor() {}
 
-    _loggedIn = false;
+	private loggedIn = true;
 
-    get isLoggedIn() {
-        return this._loggedIn;
-    }
+	public get isLoggedIn(): boolean {
+		return this.loggedIn;
+	}
 
-    async tryLogin(username: string, password: string) {
-        return new Promise<void>((resolve, reject) => {
-            setTimeout(() => {
-                this._loggedIn = true;
-                resolve();
-            }, 2000);
-        });
-    }
+	public async loginAsync(username: string, password: string): Promise<void> {
+		// Call api with credentials
+		return new Promise<void>((resolve) => {
+			setTimeout(() => {
+				this.loggedIn = true;
+				resolve();
+			}, 500);
+		});
+	}
+
+	public logout(): void {
+		this.loggedIn = false;
+	}
 }

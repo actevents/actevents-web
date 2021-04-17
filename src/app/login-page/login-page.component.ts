@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
 	templateUrl: './login-page.component.html',
@@ -11,8 +11,10 @@ export class LoginPageComponent implements OnInit {
 
 	ngOnInit(): void {}
 
-	async onLogin() {
-		await this.authService.tryLogin('', '');
-		await this.router.navigate(['']);
+	async onLogin(): Promise<void> {
+		try {
+			await this.authService.loginAsync('', '');
+			await this.router.navigate(['/']);
+		} catch (error) {}
 	}
 }

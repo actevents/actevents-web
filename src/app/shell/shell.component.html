@@ -1,4 +1,7 @@
 <header class="top-bar">
+	<button mat-icon-button class="arrow-back" (click)="onGoBack()" *ngIf="canGoBack">
+		<mat-icon>arrow_back</mat-icon>
+	</button>
 	<h1 class="title">actevents</h1>
 </header>
 
@@ -10,16 +13,16 @@
 <nav class="navbar">
 	<div class="navbar__items">
 		<div class="navbar__item" routerLinkActive="active" routerLink="" [routerLinkActiveOptions]="{ exact: true }">
-			<i class="fas fa-home"></i>
-            <span>Home</span>
+			<mat-icon>home</mat-icon>
+            <span>Discover</span>
 		</div>
-		<div class="navbar__item" routerLinkActive="active" routerLink="find">
-			<i class="fas fa-search-location"></i>
-            <span>Entdecken</span>
+		<div class="navbar__item" routerLinkActive="active" routerLink="saved">
+			<mat-icon>star_rate</mat-icon>
+            <span>Saved</span>
 		</div>
-		<div class="navbar__item disabled" routerLinkActive="active" routerLink="profile">
-			<i class="fas fa-user"></i>
-            <span>Profil</span>
+		<div class="navbar__item" routerLinkActive="active" routerLink="settings">
+			<mat-icon>settings</mat-icon>
+            <span>Settings</span>
 		</div>
 	</div>
 </nav>

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FeedComponent } from './feed.component';
+import { SavedComponent } from './saved.component';
 
-const routes: Routes = [{ path: '', component: FeedComponent }];
+const routes: Routes = [{ path: '', component: SavedComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class FeedRoutingModule { }
+export class SavedRoutingModule { }

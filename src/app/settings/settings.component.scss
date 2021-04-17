@@ -1,0 +1,22 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.list-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: stretch;
+	min-height: 5rem;
+
+	&__title {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	&__arrow {
+		align-self: center;
+	}
+}

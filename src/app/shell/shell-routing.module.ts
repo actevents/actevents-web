@@ -7,10 +7,21 @@ const routes: Routes = [
 		path: '',
 		component: ShellComponent,
 		children: [
-			{ path: '', loadChildren: () => import('../feed/feed.module').then((m) => m.FeedModule) },
-			{ path: 'find', loadChildren: () => import('../find/find.module').then((m) => m.FindModule) },
-		]
-	}
+			{
+				path: '',
+				loadChildren: () => import('../discover/discover.module').then((m) => m.DiscoverModule),
+			},
+			{
+				path: 'saved',
+				loadChildren: () => import('../saved/saved.module').then((m) => m.SavedModule),
+			},
+
+			{
+				path: 'settings',
+				loadChildren: () => import('../settings/settings.module').then((m) => m.SettingsModule),
+			},
+		],
+	},
 ];
 
 @NgModule({
