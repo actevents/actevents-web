@@ -12,7 +12,7 @@ export class SettingsComponent implements OnInit {
 	ngOnInit(): void {}
 
 	onLogout(): void {
-		this.authService.logout();
+		this.authService.logoutAsync();
 		this.router.navigate(['/login']);
 	}
 }

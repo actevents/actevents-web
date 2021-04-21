@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Auth } from 'aws-amplify';
 
 @Injectable({
 	providedIn: 'root',
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 	constructor() {}
 
-	private loggedIn = false;
+	private loggedIn = true;
 
 	public isLoggedIn(): boolean {
 		return this.loggedIn;
@@ -20,9 +21,12 @@ export class AuthService {
 				resolve();
 			}, 500);
 		});
+
+		// await Auth.signIn(username, password);
 	}
 
-	public logout(): void {
+	public async logoutAsync() {
 		this.loggedIn = false;
+		// await Auth.signOut();
 	}
 }
