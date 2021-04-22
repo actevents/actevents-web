@@ -1,0 +1,21 @@
+<form class="container" [formGroup]="form" (ngSubmit)="onSubmit()">
+	<h1>Create an account</h1>
+	<mat-form-field appearance="fill">
+		<mat-label>E-Mail</mat-label>
+		<input matInput type="email" name="email" formControlName="email" required />
+        <mat-error *ngIf="form.controls.email.hasError('alreadyExists')">An account with that email already exists</mat-error>
+	</mat-form-field>
+	<mat-form-field appearance="fill">
+		<mat-label>Password</mat-label>
+		<input matInput type="password" name="password" formControlName="password" required />
+	</mat-form-field>
+	<mat-form-field appearance="fill">
+		<mat-label>Confirm password</mat-label>
+		<input matInput type="password" name="password_confirm" formControlName="passwordConfirm" required />
+        <mat-error *ngIf="form.controls.passwordConfirm.hasError('notMatch')">Passwords do not match</mat-error>
+	</mat-form-field>
+	<button class="btn" mat-flat-button type="submit" color="primary">Create account</button>
+	<a class="link" routerLink="/login">Already have an account? Login here</a>
+
+	<p class="link" *ngIf="registrationSuccessful">Registration was successful, please check your email inbox to verify your email address.</p>
+</form>

@@ -1,15 +1,16 @@
+<form class="container" [formGroup]="form" (ngSubmit)="onSubmit()">
+	<h1>Login</h1>
+	<mat-form-field appearance="fill">
+		<mat-label>E-Mail</mat-label>
+		<input matInput type="email" placeholder="Email" name="email" formControlName="email" required />
+		<mat-error *ngIf="form.controls.email.hasError('notConfirmed')">The account has not been confirmed yet, please check your email inbox</mat-error>
+	</mat-form-field>
+	<mat-form-field appearance="fill">
+		<mat-label>Password</mat-label>
+		<input matInput type="password" placeholder="Password" name="password" formControlName="password" required />
+		<mat-error *ngIf="form.controls.password.hasError('invalid')">Invalid email or password</mat-error>
+	</mat-form-field>
+	<button class="btn" mat-flat-button type="submit" color="primary" [disabled]="isLoading">Login</button>
 
-<div class="login-container">
-    <h1>Login</h1>
-    <mat-form-field appearance="fill">
-        <mat-label>E-Mail</mat-label>
-        <input matInput type="email" name="email">
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" name="password">
-    </mat-form-field>
-    <button mat-flat-button type="submit" color="primary" (click)="onLogin()">Login</button>
-    <button mat-flat-button color="primary" routerLink="/settings/profile">Cheat go-to-settings</button>
-
-</div>
+	<a class="link" routerLink="/register">Don't have an account yet? Create one</a>
+</form>

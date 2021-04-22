@@ -2,8 +2,15 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
-  production: false
+import { IEnvironment } from './environment.type';
+
+export const environment: IEnvironment = {
+	production: false,
+	cognito: {
+		region: 'eu-central-1',
+		userPoolId: 'eu-central-1_zUunJTKLc',
+		userPoolWebClientId: '7di8jcfd1kbm8d2j19pdshf4uu',
+	},
 };
 
 /*

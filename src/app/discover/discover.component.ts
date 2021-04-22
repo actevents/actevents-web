@@ -25,6 +25,7 @@ export class DiscoverComponent implements OnInit {
 			console.error('Error while fetching the geolocation', error);
 			if (error.code === 1) {
 				console.log('User denied geolocation access');
+				alert('Access blocked by user');
 			}
 		} finally {
 			this.isLoading = false;
