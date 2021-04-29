@@ -4,5 +4,8 @@ export interface IEnvironment {
         region: string;
         userPoolId: string;
         userPoolWebClientId: string;
+    };
+    api: {
+        base: string;
     }
 }

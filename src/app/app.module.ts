@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [AppComponent, LoginPageComponent, RegisterPageComponent],
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		ReactiveFormsModule,
+		HttpClientModule,
 		MatInputModule,
 		MatButtonModule,
 		ServiceWorkerModule.register('ngsw-worker.js', {

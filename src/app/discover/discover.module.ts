@@ -10,9 +10,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
+import { EventComponent } from './event/event.component';
 
 @NgModule({
-	declarations: [DiscoverComponent],
+	declarations: [DiscoverComponent, EventComponent],
 	imports: [CommonModule, DiscoverRoutingModule, MatIconModule, MatButtonModule, MatMenuModule, MatProgressSpinnerModule, MatTableModule, MatDividerModule],
 })
 export class DiscoverModule {}

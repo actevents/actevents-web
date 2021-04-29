@@ -10,16 +10,6 @@
 	</mat-menu>
 </div>
 
-<button mat-raised-button color="primary" (click)="getLocation()" [disabled]="isLoading">Get Location</button>
-<br />
-<br />
-<table>
-	<tr>
-		<th>Lat</th>
-		<td>{{ location?.coords?.latitude }}</td>
-	</tr>
-	<tr>
-		<th>Lon</th>
-		<td>{{ location?.coords?.longitude }}</td>
-	</tr>
-</table>
+<div class="events">
+	<av-event *ngFor="let event of events"></av-event>
+</div>
