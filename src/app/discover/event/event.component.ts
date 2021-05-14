@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Event } from 'src/app/models/event.type';
 
 @Component({
 	selector: 'av-event',
@@ -8,6 +9,9 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class EventComponent implements OnInit {
 	constructor() {}
+
+	@Input()
+	event: Event;
 
 	ngOnInit(): void {}
 }

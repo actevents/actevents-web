@@ -34,7 +34,7 @@
 						"tsConfig": "tsconfig.app.json",
 						"aot": true,
 						"assets": ["src/favicon.ico", "src/assets", "src/manifest.webmanifest"],
-						"styles": ["src/styles.scss", "node_modules/@fortawesome/fontawesome-free/css/all.min.css"],
+						"styles": ["src/styles.scss", "node_modules/@fortawesome/fontawesome-free/css/all.min.css", "node_modules/ol/ol.css"],
 						"scripts": []
 					},
 					"configurations": {

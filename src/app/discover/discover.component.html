@@ -1,15 +1,16 @@
-<div class="topbar-menu">
+<!-- <div class="topbar-menu">
 	<button mat-icon-button [matMenuTriggerFor]="menu">
 		<mat-icon>more_vert</mat-icon>
 	</button>
 	<mat-menu #menu="matMenu">
 		<button mat-menu-item>Sort by radius</button>
 		<button mat-menu-item>Sort by popularity</button>
-		<mat-divider></mat-divider>
-		<button mat-menu-item>Set search radius</button>
 	</mat-menu>
-</div>
+</div> -->
+
+<h2>Discover</h2>
+<mat-spinner style="margin: 0 auto;" diameter="40" *ngIf="isLoading"></mat-spinner>
 
 <div class="events">
-	<av-event *ngFor="let event of events"></av-event>
+	<av-event class="event" *ngFor="let event of events" [event]="event"></av-event>
 </div>

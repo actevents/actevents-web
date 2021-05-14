@@ -26,6 +26,10 @@ export class AuthService {
 		}
 	}
 
+	public async getToken() {
+		return (await Auth.currentSession()).getIdToken();
+	}
+
 	public async loginAsync(email: string, password: string): Promise<void> {
 		await Auth.signIn(email, password);
 	}

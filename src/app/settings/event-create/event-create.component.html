@@ -1,0 +1,47 @@
+<h2>Create event</h2>
+
+<av-map-picker (locationSelected)="onLocationSelected($event)" *ngIf="isLocationPopupOpen"></av-map-picker>
+
+<form class="create-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+	<mat-form-field appearance="fill">
+		<mat-label>Name</mat-label>
+		<input type="text" matInput required formControlName="name" />
+	</mat-form-field>
+
+	<mat-checkbox [(ngModel)]="isMultiDate" [ngModelOptions]="{ standalone: true }">Multiday event</mat-checkbox>
+
+	<mat-form-field appearance="fill">
+		<mat-label>{{ isMultiDate ? 'Choose a start date' : 'Choose a date' }}</mat-label>
+		<input matInput [matDatepicker]="startPicker" required formControlName="start" />
+		<mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+		<mat-datepicker #startPicker></mat-datepicker>
+	</mat-form-field>
+
+	<mat-form-field appearance="fill" *ngIf="isMultiDate">
+		<mat-label>Choose an end date</mat-label>
+		<input matInput [matDatepicker]="endPicker" required formControlName="end" />
+		<mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+		<mat-datepicker #endPicker></mat-datepicker>
+	</mat-form-field>
+
+	<mat-form-field appearance="fill">
+		<mat-label>Description</mat-label>
+		<textarea matInput required formControlName="description"></textarea>
+	</mat-form-field>
+
+	<mat-form-field appearance="fill">
+		<mat-label>Price</mat-label>
+		<input type="number" matInput min="0" formControlName="price" />
+	</mat-form-field>
+
+	<button mat-raised-button color="primary" (click)="isLocationPopupOpen = true">Choose location</button>
+	<mat-error
+		*ngIf="
+			(form.controls.longitude.touched && form.controls.longitude.hasError('required')) ||
+			(form.controls.latitude.touched && form.controls.latitude.hasError('required'))
+		"
+		>Please set a location</mat-error
+	>
+
+	<button mat-raised-button type="submit" color="primary">Create event</button>
+</form>

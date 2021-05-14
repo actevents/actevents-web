@@ -23,7 +23,7 @@ export class DiscoverComponent implements OnInit {
 		try {
 			const location = await this.getLocation();
 			const { latitude, longitude } = location.coords;
-			this.events = await this.eventsService.getAllEvents(latitude, longitude).toPromise();
+			this.events = await this.eventsService.getAllEvents(latitude, longitude);
 		} catch (error) {
 			console.error('Error fetching events', error);
 		} finally {

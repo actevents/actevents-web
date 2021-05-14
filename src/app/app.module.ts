@@ -12,7 +12,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatNativeDateModule } from '@angular/material/core';
+import { JwtInterceptor } from './auth/jwt.interceptor';
 
 @NgModule({
 	declarations: [AppComponent, LoginPageComponent, RegisterPageComponent],
@@ -24,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
 		HttpClientModule,
 		MatInputModule,
 		MatButtonModule,
+		MatNativeDateModule,
 		ServiceWorkerModule.register('ngsw-worker.js', {
 			enabled: environment.production,
 			// Register the ServiceWorker as soon as the app is stable
@@ -31,7 +34,13 @@ import { HttpClientModule } from '@angular/common/http';
 			registrationStrategy: 'registerWhenStable:30000',
 		}),
 	],
-	providers: [],
+	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: JwtInterceptor,
+			multi: true,
+		},
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

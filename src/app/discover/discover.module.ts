@@ -6,6 +6,7 @@ import { DiscoverComponent } from './discover.component';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
@@ -14,6 +15,16 @@ import { EventComponent } from './event/event.component';
 
 @NgModule({
 	declarations: [DiscoverComponent, EventComponent],
-	imports: [CommonModule, DiscoverRoutingModule, MatIconModule, MatButtonModule, MatMenuModule, MatProgressSpinnerModule, MatTableModule, MatDividerModule],
+	imports: [
+		CommonModule,
+		DiscoverRoutingModule,
+		MatIconModule,
+		MatButtonModule,
+		MatMenuModule,
+		MatProgressSpinnerModule,
+		MatTableModule,
+		MatDividerModule,
+		MatCardModule,
+	],
 })
 export class DiscoverModule {}
