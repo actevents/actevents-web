@@ -13,9 +13,6 @@ export class EventsService {
 	async getAllEvents(latitude: number, longitude: number) {
 		return this.http
 			.get<Event[]>(`${env.api.base}/events`, {
-				headers: {
-					'x-api-key': '2aZ4yPAsNR1WCzQH1PxUh7tGD6o2E5YW2TZuM4IT',
-				},
 				params: {
 					latitude: String(latitude),
 					longitude: String(longitude),
@@ -30,7 +27,8 @@ export class EventsService {
 		description: string;
 		location: { latitude: string; longitude: string };
 		dates: { begin: Date; end: Date };
+		tags: string[];
 	}) {
-		return this.http.post(`${env.api.base}/events`, event);
+		return this.http.post(`${env.api.base}/events`, event).toPromise();
 	}
 }

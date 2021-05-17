@@ -10,17 +10,19 @@ export class EventCreateComponent implements OnInit {
 	isMultiDate = false;
 	isLocationPopupOpen = false;
 
+	today = new Date();
+
 	form: FormGroup;
 
 	constructor(private fb: FormBuilder, private eventsService: EventsService) {
 		this.form = fb.group({
-			name: ['', Validators.required],
-			start: ['', Validators.required],
-			end: [''],
-			description: ['', Validators.required],
-			price: [undefined],
-			latitude: ['', Validators.required],
-			longitude: ['', Validators.required],
+			name: [null, Validators.required],
+			start: [null, Validators.required],
+			end: [null, Validators.required],
+			description: [null, Validators.required],
+			price: [0],
+			latitude: [null, Validators.required],
+			longitude: [null, Validators.required],
 		});
 	}
 
@@ -52,6 +54,7 @@ export class EventCreateComponent implements OnInit {
 				latitude,
 				longitude,
 			},
+			tags: []
 		});
 
 		console.log('event created');

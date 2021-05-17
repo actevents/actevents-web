@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 import { MapPickerComponent } from './event-create/map-picker/map-picker.component';
 
@@ -39,7 +40,10 @@ import { MapPickerComponent } from './event-create/map-picker/map-picker.compone
 		MatAutocompleteModule,
 		MatSelectModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		NgxMatDatetimePickerModule,
+		NgxMatTimepickerModule,
+		NgxMatNativeDateModule
 	],
 })
 export class SettingsModule {}

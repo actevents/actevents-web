@@ -8,20 +8,18 @@
 		<input type="text" matInput required formControlName="name" />
 	</mat-form-field>
 
-	<mat-checkbox [(ngModel)]="isMultiDate" [ngModelOptions]="{ standalone: true }">Multiday event</mat-checkbox>
-
 	<mat-form-field appearance="fill">
-		<mat-label>{{ isMultiDate ? 'Choose a start date' : 'Choose a date' }}</mat-label>
-		<input matInput [matDatepicker]="startPicker" required formControlName="start" />
+		<mat-label>Start date</mat-label>
+		<input matInput [ngxMatDatetimePicker]="startPicker" required formControlName="start" [min]="today" />
 		<mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-		<mat-datepicker #startPicker></mat-datepicker>
+		<ngx-mat-datetime-picker #startPicker></ngx-mat-datetime-picker>
 	</mat-form-field>
 
-	<mat-form-field appearance="fill" *ngIf="isMultiDate">
-		<mat-label>Choose an end date</mat-label>
-		<input matInput [matDatepicker]="endPicker" required formControlName="end" />
+	<mat-form-field appearance="fill">
+		<mat-label>End date</mat-label>
+		<input matInput [ngxMatDatetimePicker]="endPicker" required formControlName="end" />
 		<mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-		<mat-datepicker #endPicker></mat-datepicker>
+		<ngx-mat-datetime-picker #endPicker></ngx-mat-datetime-picker>
 	</mat-form-field>
 
 	<mat-form-field appearance="fill">
@@ -42,6 +40,7 @@
 		"
 		>Please set a location</mat-error
 	>
+	<span style="text-align: center;" *ngIf="form.controls.latitude.value && form.controls.longitude.value">Location set</span>
 
 	<button mat-raised-button type="submit" color="primary">Create event</button>
 </form>

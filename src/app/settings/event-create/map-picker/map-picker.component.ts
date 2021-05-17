@@ -5,6 +5,10 @@ import View from 'ol/View';
 import OSM from 'ol/source/OSM';
 import * as olProj from 'ol/proj';
 import TileLayer from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import { Feature } from 'ol';
+import Point from 'ol/geom/Point';
 
 @Component({
 	selector: 'av-map-picker',
