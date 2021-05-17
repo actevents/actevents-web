@@ -26,5 +26,8 @@ import { EventComponent } from './event/event.component';
 		MatDividerModule,
 		MatCardModule,
 	],
+	exports: [
+		EventComponent
+	]
 })
 export class DiscoverModule {}

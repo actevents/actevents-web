@@ -21,9 +21,16 @@ export class EventsService {
 			.toPromise();
 	}
 
+
+	async getMyEvents() {
+		return this.http
+			.get<Event[]>(`${env.api.base}/events/me`)
+			.toPromise();
+	}
+
 	async createEvent(event: {
 		name: string;
-		price: number,
+		price: string,
 		description: string;
 		location: { latitude: string; longitude: string };
 		dates: { begin: Date; end: Date };

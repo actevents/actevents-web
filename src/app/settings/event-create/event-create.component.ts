@@ -49,10 +49,10 @@ export class EventCreateComponent implements OnInit {
 				begin: start,
 				end,
 			},
-			price,
+			price: String(price),
 			location: {
-				latitude,
-				longitude,
+				latitude: String(latitude),
+				longitude: String(longitude),
 			},
 			tags: []
 		});

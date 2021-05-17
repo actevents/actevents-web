@@ -1,2 +1,4 @@
 <h2>Your created events</h2>
 <button routerLink="create">CREATE</button>
+
+<av-event *ngFor="let event of myEvents" [event]="event"></av-event>

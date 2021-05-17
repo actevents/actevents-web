@@ -22,6 +22,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 import { MapPickerComponent } from './event-create/map-picker/map-picker.component';
+import { EventComponent } from '../discover/event/event.component';
+import { DiscoverModule } from '../discover/discover.module';
 
 @NgModule({
 	declarations: [SettingsComponent, EventsComponent, EventCreateComponent, MapPickerComponent],
@@ -43,7 +45,8 @@ import { MapPickerComponent } from './event-create/map-picker/map-picker.compone
 		ReactiveFormsModule,
 		NgxMatDatetimePickerModule,
 		NgxMatTimepickerModule,
-		NgxMatNativeDateModule
+		NgxMatNativeDateModule,
+		DiscoverModule
 	],
 })
 export class SettingsModule {}
