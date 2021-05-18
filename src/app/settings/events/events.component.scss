@@ -1,0 +1,15 @@
+.events {
+    margin-top: 1rem;
+
+    .event {
+        display: flex;
+	    justify-content: space-between;
+
+        &__arrow {
+            align-self: center;
+        }
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+}

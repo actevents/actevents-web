@@ -21,16 +21,21 @@ export class EventsService {
 			.toPromise();
 	}
 
-
 	async getMyEvents() {
-		return this.http
-			.get<Event[]>(`${env.api.base}/events/me`)
-			.toPromise();
+		return this.http.get<Event[]>(`${env.api.base}/events/me`).toPromise();
+	}
+
+	async getEventById(id: string) {
+		return this.http.get<Event>(`${env.api.base}/events/${id}`).toPromise();
+	}
+
+	async deleteEvent(id: string) {
+		return this.http.delete(`${env.api.base}/events/${id}`).toPromise();
 	}
 
 	async createEvent(event: {
 		name: string;
-		price: string,
+		price: string;
 		description: string;
 		location: { latitude: string; longitude: string };
 		dates: { begin: Date; end: Date };

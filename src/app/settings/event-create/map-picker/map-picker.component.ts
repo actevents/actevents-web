@@ -9,6 +9,7 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import { Feature } from 'ol';
 import Point from 'ol/geom/Point';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
 	selector: 'av-map-picker',
@@ -16,12 +17,15 @@ import Point from 'ol/geom/Point';
 	styleUrls: ['./map-picker.component.scss'],
 })
 export class MapPickerComponent implements OnInit {
+
+	constructor(private location: LocationService) { }
+
 	map: Map;
 	@Output() locationSelected = new EventEmitter<{ latitude: number; longitude: number }>();
 
-	constructor() {}
+	async ngOnInit() {
+		const { coords } = await this.location.getLocation();
 
-	ngOnInit(): void {
 		this.map = new Map({
 			target: 'map',
 			layers: [
@@ -30,7 +34,7 @@ export class MapPickerComponent implements OnInit {
 				}),
 			],
 			view: new View({
-				center: olProj.fromLonLat([9.194192862699525, 48.89756749780673]),
+				center: olProj.fromLonLat([coords.longitude, coords.latitude]),
 				zoom: 12,
 			}),
 		});

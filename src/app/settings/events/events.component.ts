@@ -10,9 +10,18 @@ export class EventsComponent implements OnInit {
 	constructor(private eventsService: EventsService) {}
 
 	myEvents: Event[] = [];
+	isLoading = false;
+	error;
 
 	async ngOnInit() {
-		const events = await this.eventsService.getMyEvents();
-		this.myEvents = events;
+		this.isLoading = true;
+		try {
+			const events = await this.eventsService.getMyEvents();
+			this.myEvents = events;
+		} catch (error) {
+			this.error = error;
+		} finally {
+			this.isLoading = false;
+		}
 	}
 }

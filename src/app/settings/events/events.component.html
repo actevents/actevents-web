@@ -1,4 +1,16 @@
 <h2>Your created events</h2>
-<button routerLink="create">CREATE</button>
+<button mat-raised-button color="primary" routerLink="create">CREATE</button>
 
-<av-event *ngFor="let event of myEvents" [event]="event"></av-event>
+
+<mat-spinner style="margin: 0 auto;" diameter="40" *ngIf="isLoading"></mat-spinner>
+
+<div class="events">
+    <mat-card class="event" *ngFor="let event of myEvents" matRipple [routerLink]="event.id">
+        <div class="event__infos">
+            <div class="event__name">{{ event.name }}</div>
+            <div class="event__time">{{ event.dates.begin | date }} - {{ event.dates.end | date }}</div>
+        </div>
+
+	    <mat-icon class="event__arrow">arrow_right</mat-icon>
+    </mat-card>
+</div>

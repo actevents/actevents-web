@@ -1,7 +1,14 @@
 export type Event = {
 	id: string;
 	name: string;
-	latitude: string;
-	longitude: string;
+	description: string;
+	dates: {
+		begin: Date;
+		end: Date;
+	}
+	location: {
+		latitude: string;
+		longitude: string;
+	};
 	distance: number;
 };

@@ -12,7 +12,7 @@ export const environment: IEnvironment = {
 		userPoolWebClientId: '7di8jcfd1kbm8d2j19pdshf4uu',
 	},
 	api: {
-		base: 'https://api.actevents.de/test'
+		base: 'https://api.actevents.de/prod'
 	}
 };
 

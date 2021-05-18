@@ -19,14 +19,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 import { MapPickerComponent } from './event-create/map-picker/map-picker.component';
 import { EventComponent } from '../discover/event/event.component';
 import { DiscoverModule } from '../discover/discover.module';
+import { EventDetailsComponent } from './event-details/event-details.component';
 
 @NgModule({
-	declarations: [SettingsComponent, EventsComponent, EventCreateComponent, MapPickerComponent],
+	declarations: [SettingsComponent, EventsComponent, EventCreateComponent, MapPickerComponent, EventDetailsComponent],
 	imports: [
 		CommonModule,
 		SettingsRoutingModule,
@@ -43,6 +45,7 @@ import { DiscoverModule } from '../discover/discover.module';
 		MatSelectModule,
 		FormsModule,
 		ReactiveFormsModule,
+		MatProgressSpinnerModule,
 		NgxMatDatetimePickerModule,
 		NgxMatTimepickerModule,
 		NgxMatNativeDateModule,
