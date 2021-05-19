@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { EventsService } from 'src/app/services/events.service';
 
 @Component({
@@ -7,20 +9,22 @@ import { EventsService } from 'src/app/services/events.service';
 	styleUrls: ['./event-create.component.scss'],
 })
 export class EventCreateComponent implements OnInit {
-	isMultiDate = false;
 	isLocationPopupOpen = false;
-
+	isLoading = false;
 	today = new Date();
 
-	form: FormGroup;
+	error;
 
-	constructor(private fb: FormBuilder, private eventsService: EventsService) {
+	form: FormGroup;
+	file: File;
+
+	constructor(private fb: FormBuilder, private eventsService: EventsService, private router: Router) {
 		this.form = fb.group({
 			name: [null, Validators.required],
 			start: [null, Validators.required],
 			end: [null, Validators.required],
 			description: [null, Validators.required],
-			price: [0],
+			price: [undefined],
 			latitude: [null, Validators.required],
 			longitude: [null, Validators.required],
 		});
@@ -42,21 +46,41 @@ export class EventCreateComponent implements OnInit {
 
 		const { name, start, end, description, price, latitude, longitude } = this.form.value;
 
-		await this.eventsService.createEvent({
-			name,
-			description,
-			dates: {
-				begin: start,
-				end,
-			},
-			price: String(price),
-			location: {
-				latitude: String(latitude),
-				longitude: String(longitude),
-			},
-			tags: []
-		});
+		this.isLoading = true;
+		try {
+			let fileName;
+			if (this.file) {
+				const { uploadUrl, fileName } = await this.eventsService.getUploadUrl();
+				await this.eventsService.uploadImage(uploadUrl, this.file);
+			}
 
-		console.log('event created');
+			const response = await this.eventsService.createEvent({
+				name,
+				description,
+				dates: {
+					begin: moment(start).seconds(0).toDate(),
+					end: moment(end).seconds(0).toDate(),
+				},
+				price: price ? String(price) : '0',
+				location: {
+					latitude: String(latitude),
+					longitude: String(longitude),
+				},
+				tags: [],
+				fileName
+			});
+
+			this.router.navigate(['/settings/events']);
+		} catch (error) {
+			console.log('Error event create', error);
+			this.error = error;
+		} finally {
+			this.isLoading = false;
+		}
+	}
+
+	onFileSelected(event) {
+		const file: File = event.target.files[0];
+		this.file = file;
 	}
 }

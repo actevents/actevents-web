@@ -2,6 +2,7 @@ import { IEnvironment } from './environment.type';
 
 export const environment: IEnvironment = {
 	production: true,
+	baseUrl: 'https://app.actevents.de',
 	cognito: {
 		region: 'eu-central-1',
 		userPoolId: 'eu-central-1_zUunJTKLc',

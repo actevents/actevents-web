@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 
 @Component({
-  selector: 'av-saved',
-  templateUrl: './saved.component.html',
-  styleUrls: ['./saved.component.scss']
+	selector: 'av-saved',
+	templateUrl: './saved.component.html',
+	styleUrls: ['./saved.component.scss'],
 })
 export class SavedComponent implements OnInit {
+	isScannerOpened = true;
 
-  constructor() { }
+	@ViewChild('scanner', { static: false })
+	scanner: ZXingScannerComponent;
 
-  ngOnInit(): void {
-  }
+	constructor() {}
 
+	ngOnInit(): void {
+	}
+
+	onScanComplete(event): void {
+		console.log(event);
+	}
 }

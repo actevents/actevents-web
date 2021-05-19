@@ -7,10 +7,18 @@
 		<button mat-menu-item>Sort by popularity</button>
 	</mat-menu>
 </div> -->
-<div id="map"></div>
+<div class="map-overlay">
+	<div id="map"></div>
+	<div class="slider-overlay">
+		<mat-slider min="5" max="30" step="5" thumbLabel [(ngModel)]="radius" (valueChange)="onRadiusChange($event)" [scrollLeft]="false"></mat-slider>
+	</div>
+	<div class="map-loader" *ngIf="isLoading">
+		<mat-spinner style="margin: 0 auto;" diameter="40"></mat-spinner>
+	</div>
+</div>
 
 <mat-spinner style="margin: 0 auto;" diameter="40" *ngIf="isLoading"></mat-spinner>
-
+<mat-error *ngIf="error">{{ error.message }}</mat-error>
 <div class="events">
-	<av-event class="event" *ngFor="let event of events" [event]="event"></av-event>
+	<av-event class="event" *ngFor="let event of events" [event]="event" [routerLink]="'events/' + event.id"></av-event>
 </div>

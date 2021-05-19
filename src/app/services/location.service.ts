@@ -12,10 +12,31 @@ export class LocationService {
 						resolve(position);
 					},
 					(error) => {
-						reject(error);
+						switch (error.code) {
+							case error.PERMISSION_DENIED:
+								reject(LocationAccessError.PermissionDenied);
+								break;
+							case error.POSITION_UNAVAILABLE:
+								reject(LocationAccessError.PositionUnavailable);
+								break;
+							case error.TIMEOUT:
+								reject(LocationAccessError.Timeout);
+								break;
+							default:
+								reject(error);
+						}
 					}
 				);
+			} else {
+				reject(LocationAccessError.NoLocationAccess);
 			}
 		});
 	}
+}
+
+export enum LocationAccessError {
+	PermissionDenied,
+	PositionUnavailable,
+	Timeout,
+	NoLocationAccess
 }

@@ -1,0 +1,41 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.title {
+	display: flex;
+	justify-content: space-between;
+}
+
+.infos {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+	margin: 1rem 0;
+
+	font-size: 1.1em;
+
+	td {
+		padding: 0.2rem 0;
+		padding-left: 1rem;
+	}
+
+	th {
+		padding: 0.2rem 0;
+		padding-right: 1rem;
+		border-right: 2px solid #eee;
+	}
+}
+
+
+.map-wrapper {
+	width: 100%;
+	height: 20rem;
+
+	#map {
+		width: 100%;
+		height: 100%;
+	}
+}

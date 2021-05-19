@@ -11,13 +11,19 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatRippleModule } from '@angular/material/core';
 import { EventComponent } from './event/event.component';
+import { EventDetailsComponent } from './event-details/event-details.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSliderModule } from '@angular/material/slider';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-	declarations: [DiscoverComponent, EventComponent],
+	declarations: [DiscoverComponent, EventComponent, EventDetailsComponent],
 	imports: [
 		CommonModule,
 		DiscoverRoutingModule,
+		FormsModule,
 		MatIconModule,
 		MatButtonModule,
 		MatMenuModule,
@@ -25,9 +31,9 @@ import { EventComponent } from './event/event.component';
 		MatTableModule,
 		MatDividerModule,
 		MatCardModule,
+		MatRippleModule,
+		MatFormFieldModule,
+		MatSliderModule,
 	],
-	exports: [
-		EventComponent
-	]
 })
 export class DiscoverModule {}

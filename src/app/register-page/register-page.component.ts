@@ -46,6 +46,7 @@ export class RegisterPageComponent implements OnInit {
 			this.isLoading = true;
 
 			const success = await this.authService.signUpAsync(email, password);
+			console.log('success');
 			this.registrationSuccessful = true;
 			this.isSubmitted = true;
 		} catch (error) {
@@ -62,4 +63,3 @@ export class RegisterPageComponent implements OnInit {
 		}
 	}
 }
-

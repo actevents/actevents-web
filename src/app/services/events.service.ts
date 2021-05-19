@@ -10,15 +10,15 @@ import { Event } from '../models/event.type';
 export class EventsService {
 	constructor(private http: HttpClient, private auth: AuthService) {}
 
-	async getAllEvents(latitude: number, longitude: number) {
-		return this.http
-			.get<Event[]>(`${env.api.base}/events`, {
-				params: {
-					latitude: String(latitude),
-					longitude: String(longitude),
-				},
-			})
-			.toPromise();
+	async getAllEvents(latitude: number, longitude: number, radius?: number) {
+		const params: { longitude: string; latitude: string; radius?: string } = {
+			latitude: String(latitude),
+			longitude: String(longitude),
+		};
+		if (radius) {
+			params.radius = String(radius);
+		}
+		return this.http.get<Event[]>(`${env.api.base}/events`, { params }).toPromise();
 	}
 
 	async getMyEvents() {
@@ -40,7 +40,18 @@ export class EventsService {
 		location: { latitude: string; longitude: string };
 		dates: { begin: Date; end: Date };
 		tags: string[];
+		fileName?: string;
 	}) {
-		return this.http.post(`${env.api.base}/events`, event).toPromise();
+		return this.http.post<{ message: string }>(`${env.api.base}/events`, event).toPromise();
+	}
+
+	async getUploadUrl() {
+		return this.http.get<{ uploadUrl: string; fileName: string }>(`${env.api.base}/events`).toPromise();
+	}
+
+	async uploadImage(uploadUrl: string, file: File) {
+		const content = await file.text();
+		console.log(content);
+		// return this.http.put(uploadUrl, content).toPromise();
 	}
 }

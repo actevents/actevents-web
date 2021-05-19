@@ -12,14 +12,14 @@
 		<mat-label>Start date</mat-label>
 		<input matInput [ngxMatDatetimePicker]="startPicker" required formControlName="start" [min]="today" />
 		<mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-		<ngx-mat-datetime-picker #startPicker></ngx-mat-datetime-picker>
+		<ngx-mat-datetime-picker #startPicker [touchUi]="false"></ngx-mat-datetime-picker>
 	</mat-form-field>
 
 	<mat-form-field appearance="fill">
 		<mat-label>End date</mat-label>
-		<input matInput [ngxMatDatetimePicker]="endPicker" required formControlName="end" />
+		<input matInput [ngxMatDatetimePicker]="endPicker" required formControlName="end" [min]="form.controls.start.value" />
 		<mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-		<ngx-mat-datetime-picker #endPicker></ngx-mat-datetime-picker>
+		<ngx-mat-datetime-picker #endPicker [touchUi]="false"></ngx-mat-datetime-picker>
 	</mat-form-field>
 
 	<mat-form-field appearance="fill">
@@ -32,15 +32,25 @@
 		<input type="number" matInput min="0" formControlName="price" />
 	</mat-form-field>
 
-	<button mat-raised-button color="primary" (click)="isLocationPopupOpen = true">Choose location</button>
+	<button mat-button color="primary" (click)="isLocationPopupOpen = true">
+		Choose location
+		<mat-icon *ngIf="form.controls.longitude.value && form.controls.latitude.value">check</mat-icon>
+	</button>
 	<mat-error
+		style="text-align: center"
 		*ngIf="
 			(form.controls.longitude.touched && form.controls.longitude.hasError('required')) ||
 			(form.controls.latitude.touched && form.controls.latitude.hasError('required'))
 		"
-		>Please set a location</mat-error
+		>You must set a location</mat-error
 	>
-	<span style="text-align: center;" *ngIf="form.controls.latitude.value && form.controls.longitude.value">Location set</span>
 
-	<button mat-raised-button type="submit" color="primary">Create event</button>
+	<input style="display: none" id="input-file-id" type="file" accept="image/*" (change)="onFileSelected($event)" />
+	<label for="input-file-id" class="mat-focus-indicator mat-button mat-button-base mat-primary">
+		Choose image
+		<mat-icon style="vertical-align: middle;" *ngIf="file">check</mat-icon>
+	</label>
+
+	<mat-error style="text-align: center;" *ngIf="error">Could not create event</mat-error>
+	<button mat-raised-button type="submit" color="primary" [disabled]="isLoading">Create event</button>
 </form>

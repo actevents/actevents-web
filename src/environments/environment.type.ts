@@ -1,11 +1,12 @@
 export interface IEnvironment {
-    production: boolean;
-    cognito: {
-        region: string;
-        userPoolId: string;
-        userPoolWebClientId: string;
-    };
-    api: {
-        base: string;
-    }
+	production: boolean;
+	baseUrl: string;
+	cognito: {
+		region: string;
+		userPoolId: string;
+		userPoolWebClientId: string;
+	};
+	api: {
+		base: string;
+	};
 }

@@ -1,13 +1,22 @@
 <mat-error *ngIf="error">{{ error.message }}</mat-error>
 
-<h2>{{ event?.name }}</h2>
-<div class="time">{{ event?.dates.begin | date }} - {{ event?.dates.end | date }}</div>
+<mat-spinner style="margin: 0 auto;" diameter="40" *ngIf="isLoading"></mat-spinner>
 
-<div class="description">
-    <b>Description</b>
-    <p>{{ event?.description }}</p>
+<div class="event" *ngIf="event">
+	<h2>{{ event?.name }}</h2>
+	<div class="time">{{ event.dates.begin | date }} - {{ event.dates.end | date }}</div>
+	<div class="price">{{ event.price | currency }}</div>
+
+	<div class="description">
+		<b>Description</b>
+		<p>{{ event.description }}</p>
+	</div>
+
+	<div class="actions">
+		<button mat-raised-button color="warn" [disabled]="!event" (click)="deleteEvent()">Delete</button>
+	</div>
 </div>
 
-<div class="actions">
-    <button mat-raised-button color="warn" [disabled]="!event" (click)="deleteEvent()">Delete</button>
+<div class="qr-code-wrapper" *ngIf="event">
+	<qrcode [qrdata]="eventUrl" [width]="256"></qrcode>
 </div>
