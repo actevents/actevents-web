@@ -48,41 +48,41 @@ export class EventCreateComponent implements OnInit {
 
 		console.log({ name, description });
 
-		// this.isLoading = true;
-		// try {
-		// 	let fileName;
-		// 	if (this.file) {
-		// 		const extension = this.file.name.slice(this.file.name.lastIndexOf('.') + 1);
-		// 		const uploadResponse = await this.eventsService.getUploadUrl(extension);
-		// 		console.log(uploadResponse);
-		// 		fileName = uploadResponse.fileName;
-		// 		await this.eventsService.uploadImage(uploadResponse.uploadUrl, this.file);
-		// 	}
+		this.isLoading = true;
+		try {
+			let fileName;
+			if (this.file) {
+				const extension = this.file.name.slice(this.file.name.lastIndexOf('.') + 1);
+				const uploadResponse = await this.eventsService.getUploadUrl(extension);
+				console.log(uploadResponse);
+				fileName = uploadResponse.fileName;
+				await this.eventsService.uploadImage(uploadResponse.uploadUrl, this.file);
+			}
 
-		// 	const response = await this.eventsService.createEvent({
-		// 		name,
-		// 		description,
-		// 		dates: {
-		// 			begin: moment(start).seconds(0).toDate(),
-		// 			end: moment(end).seconds(0).toDate(),
-		// 		},
-		// 		price: price ? String(price) : '0',
-		// 		location: {
-		// 			latitude: String(latitude),
-		// 			longitude: String(longitude),
-		// 		},
-		// 		tags: [],
-		// 		fileName
-		// 	});
-		// 	console.log(JSON.stringify(response));
+			const response = await this.eventsService.createEvent({
+				name,
+				description,
+				dates: {
+					begin: moment(start).seconds(0).toDate(),
+					end: moment(end).seconds(0).toDate(),
+				},
+				price: price ? String(price) : '0',
+				location: {
+					latitude: String(latitude),
+					longitude: String(longitude),
+				},
+				tags: [],
+				fileName
+			});
+			console.log(JSON.stringify(response));
 
-		// 	this.router.navigate(['/settings/events']);
-		// } catch (error) {
-		// 	console.log('Error event create', error);
-		// 	this.error = error;
-		// } finally {
-		// 	this.isLoading = false;
-		// }
+			this.router.navigate(['/settings/events']);
+		} catch (error) {
+			console.log('Error event create', error);
+			this.error = error;
+		} finally {
+			this.isLoading = false;
+		}
 	}
 
 	onFileSelected(event) {
