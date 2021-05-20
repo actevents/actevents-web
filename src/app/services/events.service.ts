@@ -11,6 +11,7 @@ export class EventsService {
 	constructor(private http: HttpClient, private auth: AuthService) {}
 
 	async getAllEvents(latitude: number, longitude: number, radius?: number) {
+		console.log('getting events in radius ' + radius);
 		const params: { longitude: string; latitude: string; radius?: string } = {
 			latitude: String(latitude),
 			longitude: String(longitude),
@@ -18,6 +19,8 @@ export class EventsService {
 		if (radius) {
 			params.radius = String(radius);
 		}
+
+		console.log(params);
 		return this.http.get<Event[]>(`${env.api.base}/events`, { params }).toPromise();
 	}
 
@@ -45,13 +48,23 @@ export class EventsService {
 		return this.http.post<{ message: string }>(`${env.api.base}/events`, event).toPromise();
 	}
 
-	async getUploadUrl() {
-		return this.http.get<{ uploadUrl: string; fileName: string }>(`${env.api.base}/events`).toPromise();
+	async getUploadUrl(extension: string) {
+		return this.http.get<{ uploadUrl: string; fileName: string }>(`${env.api.base}/events/upload`, {
+			params: {
+				extension
+			}
+		}).toPromise();
 	}
 
 	async uploadImage(uploadUrl: string, file: File) {
-		const content = await file.text();
-		console.log(content);
-		// return this.http.put(uploadUrl, content).toPromise();
+		const extension = file.name.slice(file.name.lastIndexOf('.') + 1);
+		const headers = {
+			'Content-Type': 'image/' + (['jpg', 'jpe'].includes(extension) ? 'jpeg' : extension)
+		};
+
+		console.log(headers);
+		return this.http.put(uploadUrl, file, {
+			headers
+		}).toPromise();
 	}
 }

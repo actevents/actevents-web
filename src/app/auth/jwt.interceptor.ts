@@ -9,14 +9,20 @@ export class JwtInterceptor implements HttpInterceptor {
 	constructor(private auth: AuthService) {}
 
 	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-		return from(this.auth.getToken()).pipe(
-			switchMap((token) => {
-				const headers = request.headers.set('Authorization', 'Bearer ' + token.getJwtToken());
-				const requestClone = request.clone({
-					headers,
-				});
-				return next.handle(requestClone);
-			})
-		);
+		if (request.url.startsWith('https://acteventsimages.s3.amazonaws.com/')) {
+			console.log('Removing token header for next request');
+			return next.handle(request);
+		} else {
+			return from(this.auth.getToken()).pipe(
+				switchMap((token) => {
+					const requestClone = request.clone({
+						setHeaders: {
+							Authorization: 'Bearer ' + token.getJwtToken()
+						}
+					});
+					return next.handle(requestClone);
+				})
+			);
+		}
 	}
 }

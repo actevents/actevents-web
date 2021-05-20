@@ -50,8 +50,11 @@ export class EventCreateComponent implements OnInit {
 		try {
 			let fileName;
 			if (this.file) {
-				const { uploadUrl, fileName } = await this.eventsService.getUploadUrl();
-				await this.eventsService.uploadImage(uploadUrl, this.file);
+				const extension = this.file.name.slice(this.file.name.lastIndexOf('.') + 1);
+				const uploadResponse = await this.eventsService.getUploadUrl(extension);
+				console.log(uploadResponse);
+				fileName = uploadResponse.fileName;
+				await this.eventsService.uploadImage(uploadResponse.uploadUrl, this.file);
 			}
 
 			const response = await this.eventsService.createEvent({

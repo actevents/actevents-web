@@ -52,5 +52,8 @@
 	</label>
 
 	<mat-error style="text-align: center;" *ngIf="error">Could not create event</mat-error>
-	<button mat-raised-button type="submit" color="primary" [disabled]="isLoading">Create event</button>
+	<button mat-raised-button type="submit" color="primary" [disabled]="isLoading">
+		Create event
+		<mat-spinner diameter="20" *ngIf="isLoading"></mat-spinner>
+	</button>
 </form>

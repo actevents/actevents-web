@@ -24,6 +24,7 @@ export class EventDetailsComponent implements OnInit {
 		try {
 			const { eventId } = this.route.snapshot.params;
 			this.event = await this.eventsService.getEventById(eventId);
+			console.log(this.event);
 		} catch (error) {
 			this.error = error;
 		} finally {

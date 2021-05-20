@@ -4,6 +4,7 @@
 
 <div class="event" *ngIf="event">
 	<h2>{{ event?.name }}</h2>
+	<img *ngIf="event.s3BucketUrl" class="image" [src]="event.s3BucketUrl">
 	<div class="time">{{ event.dates.begin | date }} - {{ event.dates.end | date }}</div>
 	<div class="price">{{ event.price | currency }}</div>
 

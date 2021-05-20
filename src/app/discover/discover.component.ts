@@ -14,6 +14,9 @@ import { Feature } from 'ol';
 import Point from 'ol/geom/Point';
 import { Circle, Fill, Style, Icon, Stroke } from 'ol/style';
 import IconAnchorUnits from 'ol/style/IconAnchorUnits';
+import LayerGroup from 'ol/layer/Group';
+
+import { environment as env } from 'src/environments/environment';
 
 @Component({
 	selector: 'av-discover',
@@ -30,15 +33,54 @@ export class DiscoverComponent implements OnInit {
 	map: Map;
 
 	radius = 10;
+	maxRadius = env.production ? 30 : 800;
+
+	markerGroup: LayerGroup;
 
 	svg = `<svg width="120" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="60"/></svg>`;
 
 	async ngOnInit() {
+		let radius: number;
+		if (localStorage.getItem('searchRadius')) {
+			radius = Number(localStorage.getItem('searchRadius'));
+			this.radius = radius;
+		}
 		const location = await this.fetchLocation();
 		this.location = location;
 		const { latitude: userLat, longitude: userLon } = location.coords;
 
-		this.events = await this.fetchEvents(userLat, userLon);
+		this.events = await this.fetchEvents(location, radius);
+		this.paintMap(location, this.events);
+	}
+
+	async fetchLocation() {
+		return await this.getLocation();
+	}
+
+	paintMap(userLocation: GeolocationPosition, events: Event[]) {
+		const { coords } = userLocation;
+
+		this.markerGroup = new LayerGroup({
+			layers: events.map<VectorLayer>((e) => {
+				const { longitude, latitude } = e.location;
+				const point = new Point(olProj.fromLonLat([Number(longitude), Number(latitude)]));
+				return new VectorLayer({
+					source: new VectorSource({
+						features: [new Feature(point)],
+					}),
+					style: new Style({
+						image: new Icon({
+							anchor: [0.5, 0.7],
+							anchorXUnits: IconAnchorUnits.FRACTION,
+							anchorYUnits: IconAnchorUnits.FRACTION,
+							scale: 0.2,
+							src: '/assets/marker.svg',
+						}),
+					}),
+				});
+			}),
+		});
+
 		this.map = new Map({
 			target: 'map',
 			layers: [
@@ -47,7 +89,7 @@ export class DiscoverComponent implements OnInit {
 				}),
 				new VectorLayer({
 					source: new VectorSource({
-						features: [new Feature(new Point(olProj.fromLonLat([Number(userLon), Number(userLat)])))],
+						features: [new Feature(new Point(olProj.fromLonLat([coords.longitude, coords.latitude])))],
 					}),
 					style: new Style({
 						image: new Circle({
@@ -56,41 +98,46 @@ export class DiscoverComponent implements OnInit {
 						}),
 					}),
 				}),
-				...this.events.map<VectorLayer>((e) => {
-					const { longitude, latitude } = e.location;
-					const point = new Point(olProj.fromLonLat([Number(longitude), Number(latitude)]));
-					return new VectorLayer({
-						source: new VectorSource({
-							features: [new Feature(point)],
-						}),
-						style: new Style({
-							image: new Icon({
-								anchor: [0.5, 0.7],
-								anchorXUnits: IconAnchorUnits.FRACTION,
-								anchorYUnits: IconAnchorUnits.FRACTION,
-								scale: 0.2,
-								src: '/assets/marker.svg',
-							}),
-						}),
-					});
-				}),
+				this.markerGroup,
 			],
 			view: new View({
-				center: olProj.fromLonLat([userLon, userLat]),
+				center: olProj.fromLonLat([coords.longitude, coords.latitude]),
 				zoom: 12,
 			}),
 		});
 	}
 
-	async fetchLocation() {
-		return await this.getLocation();
+	updateMap(userLocation: GeolocationPosition, events: Event[]) {
+		this.map.removeLayer(this.markerGroup);
+		this.markerGroup = new LayerGroup({
+			layers: events.map<VectorLayer>((e) => {
+				const { longitude, latitude } = e.location;
+				const point = new Point(olProj.fromLonLat([Number(longitude), Number(latitude)]));
+				return new VectorLayer({
+					source: new VectorSource({
+						features: [new Feature(point)],
+					}),
+					style: new Style({
+						image: new Icon({
+							anchor: [0.5, 0.7],
+							anchorXUnits: IconAnchorUnits.FRACTION,
+							anchorYUnits: IconAnchorUnits.FRACTION,
+							scale: 0.2,
+							src: '/assets/marker.svg',
+						}),
+					}),
+				});
+			}),
+		});
+		this.map.addLayer(this.markerGroup);
 	}
 
-	async fetchEvents(latitude: number, longitude: number, radius?: number) {
+	async fetchEvents(user: GeolocationPosition, radius?: number) {
 		this.isLoading = true;
 		this.error = undefined;
+		const { coords } = user;
 		try {
-			const events = await this.eventsService.getAllEvents(latitude, longitude, radius);
+			const events = await this.eventsService.getAllEvents(coords.latitude, coords.longitude, radius);
 			return events.sort((a, b) => a.distance - b.distance);
 		} catch (error) {
 			this.error = error;
@@ -126,9 +173,8 @@ export class DiscoverComponent implements OnInit {
 	}
 
 	async onRadiusChange(radius: number) {
-		console.log(radius);
-		const { coords } = this.location;
-		const { longitude, latitude } = coords;
-		await this.fetchEvents(latitude, longitude, radius);
+		localStorage.setItem('searchRadius', String(radius));
+		this.events = await this.fetchEvents(this.location, radius);
+		this.updateMap(this.location, this.events);
 	}
 }

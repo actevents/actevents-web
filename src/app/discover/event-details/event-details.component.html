@@ -8,6 +8,7 @@
 		<span>{{ event?.name }}</span>
 		<button mat-flat-button>+</button>
 	</h2>
+	<img *ngIf="event.s3BucketUrl" [src]="event.s3BucketUrl" alt="Event image" class="image">
 	<table class="infos">
 		<tr>
 			<th>Begin</th>
