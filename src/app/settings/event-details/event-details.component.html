@@ -5,8 +5,24 @@
 <div class="event" *ngIf="event">
 	<h2>{{ event?.name }}</h2>
 	<img *ngIf="event.s3BucketUrl" class="image" [src]="event.s3BucketUrl">
-	<div class="time">{{ event.dates.begin | date }} - {{ event.dates.end | date }}</div>
-	<div class="price">{{ event.price | currency }}</div>
+	<table class="infos">
+		<tr *ngIf="event.distance">
+			<th>Distance</th>
+			<td>{{ event.distance.toFixed(2) }} km</td>
+		</tr>
+		<tr>
+			<th>Begin</th>
+			<td>{{ event.dates.begin | date: 'yyyy-MM-dd HH:mm' }}</td>
+		</tr>
+		<tr>
+			<th>End</th>
+			<td>{{ event.dates.end | date: 'yyyy-MM-dd HH:mm' }}</td>
+		</tr>
+		<tr>
+			<th>Price</th>
+			<td>{{ event.price && event.price > 0 ? (event.price | currency: 'EUR') : 'Free' }}</td>
+		</tr>
+	</table>
 
 	<div class="description">
 		<b>Description</b>

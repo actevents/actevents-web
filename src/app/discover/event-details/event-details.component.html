@@ -10,6 +10,10 @@
 	</h2>
 	<img *ngIf="event.s3BucketUrl" [src]="event.s3BucketUrl" alt="Event image" class="image">
 	<table class="infos">
+		<tr *ngIf="event.distance">
+			<th>Distance</th>
+			<td>{{ event.distance.toFixed(2) }} km</td>
+		</tr>
 		<tr>
 			<th>Begin</th>
 			<td>{{ event.dates.begin | date: 'yyyy-MM-dd HH:mm' }}</td>

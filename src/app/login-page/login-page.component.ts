@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class LoginPageComponent implements OnInit {
 	isSubmitted = false;
 	form: FormGroup;
 
-	constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
+	constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder) {
 		this.form = fb.group({
 			email: ['', Validators.email],
 			password: ['', Validators.required],
@@ -37,7 +37,13 @@ export class LoginPageComponent implements OnInit {
 			const email = this.form.get('email')?.value;
 			const password = this.form.get('password')?.value;
 			await this.authService.loginAsync(email, password);
-			await this.router.navigate(['/']);
+
+			const { returnUrl } = this.route.snapshot.queryParams;
+			if (returnUrl) {
+				await this.router.navigate([returnUrl]);
+			} else {
+				await this.router.navigate(['/']);
+			}
 		} catch (error) {
 			console.log(error);
 			switch (error.code) {

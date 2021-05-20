@@ -28,8 +28,17 @@ export class EventsService {
 		return this.http.get<Event[]>(`${env.api.base}/events/me`).toPromise();
 	}
 
-	async getEventById(id: string) {
-		return this.http.get<Event>(`${env.api.base}/events/${id}`).toPromise();
+	async getEventById(id: string, location?: { longitude: number; latitude: number }) {
+		return this.http
+			.get<Event>(`${env.api.base}/events/${id}`, {
+				params: location !== undefined
+					? {
+							longitude: String(location.longitude),
+							latitude: String(location.latitude),
+					}
+					: undefined,
+			})
+			.toPromise();
 	}
 
 	async deleteEvent(id: string) {
@@ -45,26 +54,31 @@ export class EventsService {
 		tags: string[];
 		fileName?: string;
 	}) {
+		console.log(JSON.stringify(event));
 		return this.http.post<{ message: string }>(`${env.api.base}/events`, event).toPromise();
 	}
 
 	async getUploadUrl(extension: string) {
-		return this.http.get<{ uploadUrl: string; fileName: string }>(`${env.api.base}/events/upload`, {
-			params: {
-				extension
-			}
-		}).toPromise();
+		return this.http
+			.get<{ uploadUrl: string; fileName: string }>(`${env.api.base}/events/upload`, {
+				params: {
+					extension,
+				},
+			})
+			.toPromise();
 	}
 
 	async uploadImage(uploadUrl: string, file: File) {
 		const extension = file.name.slice(file.name.lastIndexOf('.') + 1);
 		const headers = {
-			'Content-Type': 'image/' + (['jpg', 'jpe'].includes(extension) ? 'jpeg' : extension)
+			'Content-Type': 'image/' + (['jpg', 'jpe'].includes(extension) ? 'jpeg' : extension),
 		};
 
 		console.log(headers);
-		return this.http.put(uploadUrl, file, {
-			headers
-		}).toPromise();
+		return this.http
+			.put(uploadUrl, file, {
+				headers,
+			})
+			.toPromise();
 	}
 }

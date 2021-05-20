@@ -33,7 +33,7 @@ export class DiscoverComponent implements OnInit {
 	map: Map;
 
 	radius = 10;
-	maxRadius = env.production ? 30 : 800;
+	maxRadius = env.production ? 100 : 800;
 
 	markerGroup: LayerGroup;
 
