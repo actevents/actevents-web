@@ -33,11 +33,9 @@ export class DiscoverComponent implements OnInit {
 	map: Map;
 
 	radius = 10;
-	maxRadius = env.production ? 100 : 800;
+	maxRadius = env.production ? 50 : 800;
 
 	markerGroup: LayerGroup;
-
-	svg = `<svg width="120" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="60" r="60"/></svg>`;
 
 	async ngOnInit() {
 		let radius: number;
@@ -47,7 +45,6 @@ export class DiscoverComponent implements OnInit {
 		}
 		const location = await this.fetchLocation();
 		this.location = location;
-		const { latitude: userLat, longitude: userLon } = location.coords;
 
 		this.events = await this.fetchEvents(location, radius);
 		this.paintMap(location, this.events);

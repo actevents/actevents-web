@@ -11,7 +11,6 @@ export class EventsService {
 	constructor(private http: HttpClient, private auth: AuthService) {}
 
 	async getAllEvents(latitude: number, longitude: number, radius?: number) {
-		console.log('getting events in radius ' + radius);
 		const params: { longitude: string; latitude: string; radius?: string } = {
 			latitude: String(latitude),
 			longitude: String(longitude),
@@ -20,7 +19,6 @@ export class EventsService {
 			params.radius = String(radius);
 		}
 
-		console.log(params);
 		return this.http.get<Event[]>(`${env.api.base}/events`, { params }).toPromise();
 	}
 

@@ -26,7 +26,7 @@
 
 	<div class="description">
 		<b>Description</b>
-		<p>{{ event.description }}</p>
+		<p [innerHTML]="event.description.replaceAll('\n', '<br>')"></p>
 	</div>
 
 	<div class="actions">

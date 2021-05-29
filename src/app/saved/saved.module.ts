@@ -4,10 +4,12 @@ import { CommonModule } from '@angular/common';
 import { SavedRoutingModule } from './saved-routing.module';
 import { SavedComponent } from './saved.component';
 
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DiscoverModule } from 'src/app/discover/discover.module';
 
 @NgModule({
 	declarations: [SavedComponent],
-	imports: [CommonModule, SavedRoutingModule, ZXingScannerModule],
+	imports: [CommonModule, SavedRoutingModule, MatFormFieldModule, MatProgressSpinnerModule, DiscoverModule],
 })
 export class SavedModule {}

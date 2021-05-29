@@ -35,5 +35,6 @@ import { FormsModule } from '@angular/forms';
 		MatFormFieldModule,
 		MatSliderModule,
 	],
+	exports: [EventComponent]
 })
 export class DiscoverModule {}

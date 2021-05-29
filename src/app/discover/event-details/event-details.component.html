@@ -6,7 +6,8 @@
 <div class="event" *ngIf="event">
 	<h2 class="title">
 		<span>{{ event?.name }}</span>
-		<button mat-flat-button>+</button>
+		<button *ngIf="!isFavorite" mat-flat-button (click)="addToFavorites()"><mat-icon>star</mat-icon> Save</button>
+		<button *ngIf="isFavorite" class="success-btn" mat-flat-button (click)="removeFromFavorites()"><mat-icon>check</mat-icon> Saved</button>
 	</h2>
 	<img *ngIf="event.s3BucketUrl" [src]="event.s3BucketUrl" alt="Event image" class="image">
 	<table class="infos">
@@ -16,11 +17,11 @@
 		</tr>
 		<tr>
 			<th>Begin</th>
-			<td>{{ event.dates.begin | date: 'yyyy-MM-dd HH:mm' }}</td>
+			<td>{{ event.dates.begin | date: 'HH:mm dd.MM.yyyy' }}</td>
 		</tr>
 		<tr>
 			<th>End</th>
-			<td>{{ event.dates.end | date: 'yyyy-MM-dd HH:mm' }}</td>
+			<td>{{ event.dates.end | date: 'HH:mm dd.MM.yyyy' }}</td>
 		</tr>
 		<tr>
 			<th>Price</th>
@@ -29,7 +30,7 @@
 	</table>
 	<div class="description">
 		<b>Description</b>
-		<p>{{ event.description }}</p>
+		<p [innerHTML]="event.description.replaceAll('\n', '<br>')"></p>
 	</div>
 </div>
 

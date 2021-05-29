@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ZXingScannerComponent } from '@zxing/ngx-scanner';
+import { Event } from '../models/event.type';
+import { FavoritesService } from '../services/favorites.service';
 
 @Component({
 	selector: 'av-saved',
@@ -7,17 +9,24 @@ import { ZXingScannerComponent } from '@zxing/ngx-scanner';
 	styleUrls: ['./saved.component.scss'],
 })
 export class SavedComponent implements OnInit {
-	isScannerOpened = true;
 
-	@ViewChild('scanner', { static: false })
-	scanner: ZXingScannerComponent;
+	isLoading = false;
+	error;
+	favorites: Event[] = [];
 
-	constructor() {}
+	constructor(private favoritesService: FavoritesService) {}
 
-	ngOnInit(): void {
-	}
+	async ngOnInit() {
+		try {
+			this.isLoading = true;
 
-	onScanComplete(event): void {
-		console.log(event);
+			const events = await this.favoritesService.getAll();
+			this.favorites = events;
+		} catch (error) {
+			console.error(error);
+			this.error = error;
+		} finally {
+			this.isLoading = false;
+		}
 	}
 }
