@@ -19,7 +19,7 @@
 
 <mat-spinner style="margin: 0 auto;" diameter="40" *ngIf="isLoading"></mat-spinner>
 <mat-error *ngIf="error">{{ error.message }}</mat-error>
-<div class="events">
-	<p style="text-align: center;" *ngIf="events?.length == 0">No events near you</p>
-	<av-event class="event" *ngFor="let event of events" [event]="event" [routerLink]="'events/' + event.id"></av-event>
+<div class="events" *ngIf="!isLoading">
+	<p style="text-align: center;" *ngIf="events.length == 0">No events near you</p>
+	<av-event class="event" *ngFor="let event of events" [event]="event" [isFavorite]="isFavorite(event)" [routerLink]="'events/' + event.id"></av-event>
 </div>

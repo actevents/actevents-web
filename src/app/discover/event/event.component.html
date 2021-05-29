@@ -1,6 +1,11 @@
- <mat-card matRipple>
-    <div class="name">
-        {{ event.name }}
-    </div>
-    <div class="distance" *ngIf="event.distance != undefined"><b>{{ event.distance?.toFixed(2) }} km</b> away from your location</div>
+ <mat-card matRipple class="card">
+	 <div class="card-content">
+		 <div class="name">
+			 {{ event.name }}
+		 </div>
+		 <div class="distance" *ngIf="event.distance != undefined"><b>{{ event.distance?.toFixed(2) }} km</b> away from your location</div>
+	 </div>
+	 <div class="card-icon" *ngIf="isFavorite">
+		<mat-icon>star</mat-icon>
+	 </div>
 </mat-card>

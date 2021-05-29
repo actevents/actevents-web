@@ -13,5 +13,8 @@ export class EventComponent implements OnInit {
 	@Input()
 	event: Event;
 
+	@Input()
+	isFavorite?: boolean = false;
+
 	ngOnInit(): void {}
 }

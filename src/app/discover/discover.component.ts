@@ -17,6 +17,7 @@ import IconAnchorUnits from 'ol/style/IconAnchorUnits';
 import LayerGroup from 'ol/layer/Group';
 
 import { environment as env } from 'src/environments/environment';
+import { FavoritesService } from '../services/favorites.service';
 
 @Component({
 	selector: 'av-discover',
@@ -24,9 +25,14 @@ import { environment as env } from 'src/environments/environment';
 	styleUrls: ['./discover.component.scss'],
 })
 export class DiscoverComponent implements OnInit {
-	constructor(private locationService: LocationService, private eventsService: EventsService) {}
+	constructor(
+		private locationService: LocationService,
+		private eventsService: EventsService,
+		private favoritesService: FavoritesService
+	) {}
 
-	events?: Event[];
+	events: Event[] = [];
+	favorites?: Event[] = [];
 	location: GeolocationPosition;
 	isLoading = false;
 	error;
@@ -38,16 +44,25 @@ export class DiscoverComponent implements OnInit {
 	markerGroup: LayerGroup;
 
 	async ngOnInit() {
-		let radius: number;
-		if (localStorage.getItem('searchRadius')) {
-			radius = Number(localStorage.getItem('searchRadius'));
-			this.radius = radius;
-		}
-		const location = await this.fetchLocation();
-		this.location = location;
+		try {
+			this.isLoading = true;
+			let radius: number;
+			if (localStorage.getItem('searchRadius')) {
+				radius = Number(localStorage.getItem('searchRadius'));
+				this.radius = radius;
+			}
+			const location = await this.fetchLocation();
+			this.location = location;
 
-		this.events = await this.fetchEvents(location, radius);
-		this.paintMap(location, this.events);
+			this.events = await this.fetchEvents(location, radius);
+			this.favorites = await this.favoritesService.getAll();
+
+			this.paintMap(location, this.events);
+		} catch (error) {
+			this.error = error;
+		} finally {
+			this.isLoading = false;
+		}
 	}
 
 	async fetchLocation() {
@@ -173,5 +188,9 @@ export class DiscoverComponent implements OnInit {
 		localStorage.setItem('searchRadius', String(radius));
 		this.events = await this.fetchEvents(this.location, radius);
 		this.updateMap(this.location, this.events);
+	}
+
+	isFavorite(event: Event) {
+		return this.favorites.some(e => e.id === event.id);
 	}
 }
